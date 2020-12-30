@@ -1,4 +1,9 @@
-# 0.2.0 (2020-12-30)
+# 0.3.0 (2020-12-30)
+
+
+### Bug Fixes
+
+* 删减一部分依赖 ([9cdc23f](https://github.com/jiayuanfan/overload-cli/commit/9cdc23fff8109b05e6695cebbc129de6a31af38e))
 
 
 ### Features
