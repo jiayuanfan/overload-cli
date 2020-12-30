@@ -3,7 +3,7 @@
 
 ### Features
 
-* first commit ([78a388a](https://github.com/jiayuanfan/skeleton-cli/commit/78a388a3fbba37e3f239696a94ea078b8a55a111))
+* first commit ([78a388a](https://github.com/jiayuanfan/overload-cli/commit/78a388a3fbba37e3f239696a94ea078b8a55a111))
 
 
 

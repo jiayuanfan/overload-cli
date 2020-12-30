@@ -1,5 +1,5 @@
 {
-  "name": "skeleton-cli",
+  "name": "overload-cli",
   "version": "0.1.0",
   "description": "A simple cli for skeleton",
   "author": {
@@ -7,7 +7,7 @@
     "email": "bug.jiayuan.fan@gmail.com"
   },
   "bin": {
-    "skeleton-cli": "./dist/index.js"
+    "overload-cli": "./dist/index.js"
   },
   "files": [
     "README.md",

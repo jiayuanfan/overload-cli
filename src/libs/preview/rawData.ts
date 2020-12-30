@@ -4,7 +4,7 @@ export default () => (
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>skeleton-cli preivew</title>
+  <title>overload-cli preivew</title>
 </head>
 <body style="margin: 0">
   <div id="<!-- rootID -->"><!-- skeleton --></div>

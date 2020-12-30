@@ -1,4 +1,4 @@
-## skeleton-cli
+## overload-cli
 
 > 一个生成骨架屏的 cli
 
@@ -6,11 +6,11 @@
 
 ```sh
 sudo npm install -g puppeteer --unsafe-perm=true
-sudo npm install -g skeleton-cli
+sudo npm install -g overload-cli
 ```
 
 ```sh
-sudo skeleton-cli start skeleton.config.js
+sudo overload-cli start skeleton.config.js
 ```
 
 ## About skeleton.config.js

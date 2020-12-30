@@ -5,7 +5,7 @@ import bootstrap from './bootstrap';
 const pkg = require('../package');
 
 program
-  .name('skeleton-cli')
+  .name('overload-cli')
   .usage('command [options]')
   .version(pkg.version);
 
