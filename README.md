@@ -44,6 +44,30 @@ const skeletonConfig: SkeletonConfig = {};
 module.exports = skeletonConfig;
 ```
 
+## config 示例
+
+```js
+module.exports = {
+  isMobile: true,
+  rootID: 'root',
+  originUrl: 'https://a.com/test/dist/',
+  routeMode: 'hash',
+  routes: [
+    {
+      path: '/about',
+      query: { im: 'about' },
+    },
+    {
+      path: '/home',
+      query: { im: 'home' },
+      cookies: [
+        { name: 'uid', value: '1234', domain: 'a.com' },
+      ],
+    }
+  ],
+};
+```
+
 ## 最终产物
 
 > 在当前 cli 运行目录下，会新建一个「overload-cli-output」的文件夹，包含如下内容：
