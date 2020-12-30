@@ -43,3 +43,10 @@ interface SkeletonConfig {
 const skeletonConfig: SkeletonConfig = {};
 module.exports = skeletonConfig;
 ```
+
+## 最终产物
+
+> 在当前 cli 运行目录下，会新建一个「overload-cli-output」的文件夹，包含如下内容：
+
+* runtime-script.html：内容可以直接全量复制，放置到我们自己应用的 html 文件的 root 根结点中，用来针对 **「html 返回后」 - 「script解析完毕，对 root 元素内容进行 render」之间** 时间段的页面占位；
+* 如果需要针对 **「发起接口请求」-「业务数据返回，render 到页面完毕」之间** 时间段进行页面占位，使用 runtime-script 肯定不合时宜，可以直接使用对应页面的 jpeg 图片；
