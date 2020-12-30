@@ -1,0 +1,7 @@
+/node_modules
+/dist
+/skeleton-cli-output
+/skeleton-cli-temps
+/*config.js
+/release.js
+/yarn.lock
