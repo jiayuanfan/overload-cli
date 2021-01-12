@@ -1,7 +1,7 @@
 import puppeteer, { Browser, Page } from 'puppeteer';
 
 import { OutputDirname, sleep } from '../../utils';
-import { SkeletonConfig, SkeletonConfigRoute } from '../../interface';
+import { GetScreenshotResponse, MakeSkeletonResponse, SkeletonConfig, SkeletonConfigRoute } from '../../interface';
 
 const { readFileSync } = require('fs');
 const { resolve } = require('path');
@@ -35,17 +35,18 @@ class Skeleton {
     return page;
   }
 
-  async makeSkeleton(page?: Page, options?: SkeletonConfigRoute) {
+  async makeSkeleton(page?: Page, options?: SkeletonConfigRoute): Promise<MakeSkeletonResponse> {
     const defer = 5000;
     const scriptContent = await readFileSync(resolve(__dirname, 'skeletonScript.js'), 'utf-8');
     await page?.addScriptTag({ content: scriptContent });
     await sleep(defer);
-    await page?.evaluate(options => {
-      SkeletonScript.genSkeleton(options);
+    const returnData = await page?.evaluate(options => {
+      return SkeletonScript.genSkeleton(options);
     }, { rootID: this.options.rootID, ...options } as any);
+    return returnData;
   }
 
-  async genScreenShot(url: string, routeConfig: SkeletonConfigRoute): Promise<string | undefined> {
+  async genScreenShot(url: string, routeConfig: SkeletonConfigRoute): Promise<GetScreenshotResponse> {
     const page = await this.newPage();
 
     // 设置当前页面的cookie
@@ -58,10 +59,13 @@ class Skeleton {
     try {
       await page?.goto(url, { waitUntil: 'networkidle2' });
     } catch (error) {
-      return undefined;
+      return { success: false, errorMessage: `以下路径无法访问，请先保证网络畅通 - ${url}` };
     }
 
-    await this.makeSkeleton(page, routeConfig);
+    const makeReturnData = await this.makeSkeleton(page, routeConfig);
+    if (makeReturnData.success === false) {
+      return { success: false, errorMessage: makeReturnData.message };
+    }
 
     let imageFileName = String(new Date().getTime());
     try {
@@ -79,7 +83,7 @@ class Skeleton {
     await page?.screenshot({ type: 'jpeg', path: resolve(OutputDirname, imageFileName), ...screenshotClip });
     let base64Image = await page?.screenshot({ type: 'jpeg', encoding: 'base64', ...screenshotClip });
     base64Image = `data:image/jpg;base64,${base64Image}`;
-    return base64Image;
+    return { success: true, data: base64Image };
   }
 
   async destroy() {

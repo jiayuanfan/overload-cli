@@ -1,7 +1,7 @@
 import us from 'uus';
 
 import { PuppeteerResponse, ScreenshotData, SkeletonConfig } from "../../interface";
-import { concatOriginUrl, loggerEnd, loggerError, loggerStart } from "../../utils";
+import { concatOriginUrl, loggerError, loggerSpinning } from "../../utils";
 import Skeleton from './Skeleton';
 
 const LOGGER_TITLE: string = '制作骨架屏';
@@ -22,28 +22,28 @@ const initialize = async (skeletonConfig: SkeletonConfig): Promise<PuppeteerResp
         originURL = us.concat(routeConfig.query, originURL);
       }
 
-      loggerStart(`${LOGGER_TITLE} - ${originURL}`);
+      // 制作骨架屏
+      const { success, data = '', errorMessage = '未知错误' } = 
+        await loggerSpinning(`${LOGGER_TITLE} - ${originURL}`, () => skeleton.genScreenShot(originURL, routeConfig));
 
-      const skeletonItemData = await skeleton.genScreenShot(originURL, routeConfig);
-      if (!skeletonItemData) {
-        loggerError(LOGGER_TITLE, `以下路径无法访问，请先保证网络畅通 - ${originURL}`);
+      if (success === false) {
+        loggerError(LOGGER_TITLE, errorMessage);
+        await skeleton.destroy();
         return { success: false };
       }
 
       if (skeletonConfig.isMobile === false) {
         screenshotData[routeConfig.path] = {
-          content: encodeURIComponent(skeletonItemData),
+          content: encodeURIComponent(data),
         };
       } else {
         screenshotData[routeConfig.path] = {
-          content: encodeURIComponent(skeletonItemData),
+          content: encodeURIComponent(data),
           width: 375,
         };
       }
       
       await skeleton.destroy();
-
-      loggerEnd(`${LOGGER_TITLE} - ${originURL}`);
     }
     return { success: true, data: screenshotData };
   }

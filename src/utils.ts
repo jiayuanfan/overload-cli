@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 const { existsSync, mkdirSync } = require('fs');
+const ora = require('ora');
 
 const logger = (logInfo: string, type: string, failureMsg?: string) => {
   let info = '';
@@ -31,6 +32,15 @@ const loggerStart = (logInfo: string) => logger(logInfo, 'start');
 const loggerEnd = (logInfo: string) => logger(logInfo, 'end');
 
 const loggerError = (logInfo: string, failureMsg: string) => logger(logInfo, 'error', failureMsg);
+
+async function loggerSpinning<T> (title: string, runFn: () => Promise<T>): Promise<T> {
+  const nowDate = new Date();
+  const spinner = ora(`[${nowDate.toLocaleString()}.${nowDate.getMilliseconds().toString().padStart(3, '0')}] ${title}\n`);
+  spinner.start();
+  const response = await runFn();
+  spinner.succeed();
+  return response;
+}
 
 const sleep = (duration: number): Promise<void> => {
   return new Promise(resolve => {
@@ -64,12 +74,12 @@ const setCommonDirnames = (): boolean => {
   loggerStart(loggerTitle);
 
   OriginDirname = process.cwd();
-  OutputDirname = resolve(OriginDirname, 'overload-cli-output');
+  OutputDirname = resolve(OriginDirname, 'nb-skeleton-cli-output');
   if (!existsSync(OutputDirname)) {
     mkdirSync(OutputDirname);
   }
 
-  PreviewTempDirname = resolve(__dirname, 'overload-cli-temp');
+  PreviewTempDirname = resolve(__dirname, 'nb-skeleton-cli-temp');
   if (!existsSync(PreviewTempDirname)) {
     try {
       mkdirSync(PreviewTempDirname);
@@ -83,4 +93,15 @@ const setCommonDirnames = (): boolean => {
   return true;
 };
 
-export { loggerStart, loggerEnd, loggerError, sleep, concatOriginUrl, setCommonDirnames, OriginDirname, OutputDirname, PreviewTempDirname };
+export { 
+  loggerStart, 
+  loggerEnd, 
+  loggerError, 
+  loggerSpinning,
+  sleep, 
+  concatOriginUrl, 
+  setCommonDirnames, 
+  OriginDirname, 
+  OutputDirname, 
+  PreviewTempDirname, 
+};

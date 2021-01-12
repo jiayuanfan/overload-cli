@@ -1,6 +1,6 @@
 {
   "name": "overload-cli",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "A simple cli for skeleton",
   "author": {
     "name": "bugfan",
@@ -21,6 +21,7 @@
   "dependencies": {
     "commander": "^6.2.1",
     "express": "^4.17.1",
+    "ora": "^5.2.0",
     "tslib": "^2.0.3",
     "uus": "^1.0.1"
   },

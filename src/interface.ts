@@ -38,6 +38,17 @@ export interface LoadResponse extends Response {
   data?: SkeletonConfig;
 }
 
+export interface MakeSkeletonResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface GetScreenshotResponse {
+  success: boolean;
+  data?: string;
+  errorMessage?: string;
+}
+
 export interface ScreenshotData {
   [props: string]: {
     content: string;
@@ -48,3 +59,4 @@ export interface ScreenshotData {
 export interface PuppeteerResponse extends Response {
   data?: ScreenshotData;
 }
+

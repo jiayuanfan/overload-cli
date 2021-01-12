@@ -156,14 +156,12 @@ window.SkeletonScript = (function() {
     const secondColorPoint = (((1 - textHeightRatio) / 2 + textHeightRatio) * 100).toFixed(2);
 
     const className = CLASSNAME_PREFIX + 'text';
-    // vertical-align没做important标签，只是一个保底设置
     const rule = `{
       background-origin: content-box !important;
       background-clip: content-box !important;
       background-color: transparent !important;
       color: transparent !important;
       background-repeat: repeat-y !important;
-      vertical-align: middle;
     }`;
     addClassName(`.${className}`, rule);
     element.classList.add(className);
@@ -219,6 +217,12 @@ window.SkeletonScript = (function() {
 
   // 主入口
   function genSkeleton(options = {}) {
+    // 0. 判断根结点是否有效
+    const rootElement = document.getElementById(options.rootID);
+    if (!rootElement) {
+      return { success: false, message: `id 为 ${options.rootID} 的节点不存在！` };
+    }
+
     // 1. 处理全局各种伪元素选择器
     const beforeFakeSelectorClassName = CLASSNAME_PREFIX + 'before-fake-selector';
     const afterFakeSelectorClassName = CLASSNAME_PREFIX + 'after-fake-selector';
@@ -235,7 +239,6 @@ window.SkeletonScript = (function() {
     document.body.style.background = 'none';
 
     // 3. 开启根结点遍历
-    const rootElement = document.getElementById(options.rootID);
     (function traverse(options) {
       // 3.1 参数配置
       const { excludes = [], focusTag } = options;
@@ -342,6 +345,12 @@ window.SkeletonScript = (function() {
 
     // 5. 删除测量 text 的 dom
     if (offScreenWrapElement) document.body.removeChild(offScreenWrapElement);
+
+    // 6. 删除 body 下，rootID 以外的节点
+    document.body.innerHTML = '';
+    document.body.appendChild(rootElement);
+
+    return { success: true };
   }
 
   return { genSkeleton };
