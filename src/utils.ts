@@ -74,12 +74,12 @@ const setCommonDirnames = (): boolean => {
   loggerStart(loggerTitle);
 
   OriginDirname = process.cwd();
-  OutputDirname = resolve(OriginDirname, 'nb-skeleton-cli-output');
+  OutputDirname = resolve(OriginDirname, 'overload-cli-output');
   if (!existsSync(OutputDirname)) {
     mkdirSync(OutputDirname);
   }
 
-  PreviewTempDirname = resolve(__dirname, 'nb-skeleton-cli-temp');
+  PreviewTempDirname = resolve(__dirname, 'overload-cli-temp');
   if (!existsSync(PreviewTempDirname)) {
     try {
       mkdirSync(PreviewTempDirname);
