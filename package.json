@@ -1,6 +1,6 @@
 {
   "name": "overload-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple cli for skeleton",
   "author": {
     "name": "bugfan",
@@ -27,7 +27,7 @@
   },
   "scripts": {
     "release": "node release.js",
-    "build": "yarn clean && tsc",
+    "build": "npm run clean && tsc",
     "clean": "sudo rm -rf ./dist"
   },
   "devDependencies": {
@@ -35,7 +35,6 @@
     "@types/express": "^4.17.9",
     "@types/node": "^11.13.0",
     "@types/puppeteer": "^5.4.2",
-    "awesome-typescript-loader": "^5.2.1",
     "chalk": "^4.1.0",
     "inquirer": "^7.3.3",
     "prettier": "^2.1.2",
